@@ -1,0 +1,147 @@
+import axios from "axios";
+import React from "react";
+import {
+  BsFillPauseCircleFill,
+  BsFillPlayCircleFill,
+  BsShuffle,
+} from "react-icons/bs";
+import { CgPlayTrackNext, CgPlayTrackPrev } from "react-icons/cg";
+import { FiRepeat } from "react-icons/fi";
+import styled from "styled-components";
+import { reducerCases } from "../utils/Constants";
+import { useStateProvider } from "../utils/StateProvider";
+
+const PlayerControls = ({ spin, setSpin }) => {
+  const [{ token, playerState, currentlyPlaying }, dispatch] =
+    useStateProvider();
+
+  const changeTrack = async (type) => {
+    // post request => prev , next
+    // body required {} empty
+    await axios.post(
+      `https://api.spotify.com/v1/me/player/${type}`,
+      {}, // empty body
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    // shows the currently playing song and update in reducer
+    const response = await axios.get(
+      "https://api.spotify.com/v1/me/player/currently-playing",
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (response.data !== "") {
+      const { item } = response.data;
+      const currentlyPlaying = {
+        id: item.id,
+        name: item.name,
+        artists: item.artists.map((artist) => artist.name),
+        image: item.album.images[1].url,
+        isPlaying: response.data.is_playing,
+      };
+
+      dispatch({
+        type: reducerCases.SET_PLAYING,
+        payload: { currentlyPlaying },
+      });
+    } else {
+      dispatch({
+        type: reducerCases.SET_PLAYING,
+        payload: { currentlyPlaying: null },
+      });
+    }
+  };
+
+  // play - pause
+  const changeState = async () => {
+    const state = playerState ? "pause" : "play";
+
+    setSpin(!spin);
+
+    await axios.put(
+      `https://api.spotify.com/v1/me/player/${state}`,
+      {}, // empty body
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    dispatch({
+      type: reducerCases.SET_PLAYER_STATE,
+      payload: { playerState: !playerState },
+    });
+  };
+
+  // console.log(playerState);
+
+  return (
+    <Container>
+      <div className="shuffle">
+        <BsShuffle />
+      </div>
+
+      <div className="previous">
+        <CgPlayTrackPrev onClick={() => changeTrack("previous")} />
+      </div>
+
+      <div className="state">
+        {playerState ? (
+          <BsFillPauseCircleFill onClick={changeState} />
+        ) : (
+          <BsFillPlayCircleFill onClick={changeState} />
+        )}
+      </div>
+
+      <div className="next">
+        <CgPlayTrackNext onClick={() => changeTrack("next")} />
+      </div>
+
+      <div className="repeat">
+        <FiRepeat />
+      </div>
+    </Container>
+  );
+};
+
+export default PlayerControls;
+
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+
+  svg {
+    cursor: pointer;
+    color: #b3b3b3;
+    transition: 0ms.2s ease-in-out;
+    &:hover {
+      color: white;
+    }
+  }
+
+  .state {
+    svg {
+      color: white;
+    }
+  }
+
+  .previous,
+  .next,
+  .state {
+    font-size: 2rem;
+  }
+`;

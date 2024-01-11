@@ -1,0 +1,90 @@
+npm install styled-components
+
+npm install react-icons
+
+npm i axios
+
+https://storage.googleapis.com/pr-newsroom-wp/1/2018/11/Spotify_Logo_CMYK_Black.png
+
+https://developer.spotify.com/dashboard/cf6a647a18b6477e89f69356e5add9db/settings
+
+cf6a647a18b6477e89f69356e5add9db
+
+
+authorization scopes 
+
+https://developer.spotify.com/documentation/web-api/concepts/scopes
+
+Scopes provide Spotify users using third-party apps the confidence that only the information they choose to share will be shared, and nothing more.
+Scopes are needed when implementing some of the authorization grant types.
+
+user-read-email
+user-read-private
+user-read-playback-state
+user-modify-playback-state
+user-read-currently-playing
+user-read-playback-position
+user-top-read
+user-read-recently-played
+
+
+---------------------------------------
+
+
+to login => these are required 
+
+clientId
+redirectUrl
+apiUrl
+scope
+
+
+The window.location object can be used to get the current page address (URL) and to redirect the browser to a new page.
+
+window.location.href  =>  returns the href (URL) of the current page
+
+
+
+    window.location.href = `${apiUrl}?client_id=${clientId}&redirect_uri=${redirectUrl}&scope=${scope.join(
+      " "
+    )}&response_type=token&show_dialog=true`;
+
+
+
+https://accounts.spotify.com/en/authorize?client_id=cf6a647a18b6477e89f69356e5add9db&redirect_uri=http://localhost:5173/&scope=user-read-email%20user-read-private%20user-read-playback-state%20user-modify-playback-state%20user-read-currently-playing%20user-read-playback-position%20user-top-read%20user-read-recently-played&response_type=token&show_dialog=true
+
+
+
+apiUrl  /  client_id  /  redirect_uri  /  scope ( scope.join(" ") => %20 )  /  response_type=token  /  show_dialog=true 
+
+
+**** show dialog => agree => access token 
+**** response_type=token => "access_token" will be returned  
+
+
+window.location.hash => get the anchor link #access_token 
+The location.hash property sets or returns the anchor part of a URL, including the hash sign (#).
+
+
+----------------------------------------------------------------------------------------------------------------
+
+get current user's playlist
+
+https://developer.spotify.com/documentation/web-api/reference/get-a-list-of-current-users-playlists
+
+// 401 expired token 
+
+https://developer.spotify.com/documentation/web-api/reference/get-a-list-of-current-users-playlists
+
+https://developer.spotify.com/documentation/web-api/reference/get-playlist
+
+https://api.spotify.com/v1/playlists/{playlist_id}
+
+
+https://developer.spotify.com/documentation/web-api/reference/get-the-users-currently-playing-track
+
+https://developer.spotify.com/documentation/web-api/reference/skip-users-playback-to-previous-track
+
+**** axios.post(url, body , { headers: {} })
+
+2:22:54

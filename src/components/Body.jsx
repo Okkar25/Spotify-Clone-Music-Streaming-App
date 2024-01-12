@@ -297,14 +297,16 @@ const Container = styled.div`
           &:hover {
             border-radius: 10px;
             background-color: #2a2a2a;
+            cursor: pointer;
             .col {
               color: white;
             }
           }
 
           .album {
-            width: 80%;
+            width: 90%;
             word-wrap: break-word;
+            /* font-size: 0.9rem; */
             /* white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis; 
@@ -337,8 +339,8 @@ const Container = styled.div`
 
               .artists {
                 font-size: 0.9rem;
-                width: 99%;
-                word-wrap: break-word;
+                /* width: 99%;
+                word-wrap: break-word; */
               }
             }
           }

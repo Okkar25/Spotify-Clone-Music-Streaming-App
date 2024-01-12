@@ -89,13 +89,7 @@ https://developer.spotify.com/documentation/web-api/reference/skip-users-playbac
 
 2:22:54
 
-// current track => is playing 
-// click on song to play           ---- Done 
-// login inset client id 
 
-// song progress bar 
-// background color change 
-// shuffle / repeat 
 
 
 ---------------------------------------------------------------------------------------------------------------------------------
@@ -133,7 +127,7 @@ body.jsx => line 76 => playTrack function
 ==================================================================================================
 
 
-bug to be fixed 
+bug to be fixed (fixed done)
 
 pause song => change track => error 
 
@@ -141,3 +135,30 @@ image spinning / player state button => not correct
 
 PlayerControl => line 33 => error
 setSpin(!spin)  =>  setSpin(true)  
+
+
+---------------------------------------------------------
+
+
+// current track => is playing     ---- Done
+// click on song to play           ---- Done 
+// login insert client id          ---- Done
+// background color change         ---- Done
+
+// song progress bar               
+// shuffle / repeat 
+// .env
+
+
+--------------------------------------------------------
+
+in VITE + REACT 
+
+when used .env 
+
+variable must start with VITE_  => VITE_CLIENT_ID  /  VITE_REDIRECT_URL
+
+to access them => must start with import.meta.
+import.meta.env.VITE_CLIENT_ID
+import.meta.env.VITE_REDIRECT_URL 
+

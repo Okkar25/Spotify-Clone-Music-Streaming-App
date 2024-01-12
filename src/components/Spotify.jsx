@@ -1,8 +1,10 @@
 // import axios from "axios";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 // import { reducerCases } from "../utils/Constants";
 // import { useStateProvider } from "../utils/StateProvider";
+import { backgroundColors } from "../utils/BackgroundColor";
+import { useStateProvider } from "../utils/StateProvider";
 import Body from "./Body";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
@@ -21,7 +23,8 @@ const Container = styled.div`
     height: 100%;
     width: 100%;
     background: linear-gradient(transparent, rgba(0, 0, 0, 1));
-    background-color: rgb(32, 87, 100);
+    /* background-color: rgb(32, 87, 100); */
+    background-color: ${(props) => props.themeColor};
 
     .body {
       height: 100%;
@@ -40,6 +43,8 @@ const Container = styled.div`
 `;
 
 const Spotify = () => {
+  const [{ token, selectedPlaylistId }, dispatch] = useStateProvider();
+
   const bodyRef = useRef();
   const [navBackground, setNavBackground] = useState(false);
   const [headerBackground, setHeaderBackground] = useState(false);
@@ -55,8 +60,15 @@ const Spotify = () => {
       : setHeaderBackground(false);
   };
 
+  const [themeColor, setThemeColor] = useState("");
+
+  useEffect(() => {
+    const randomColor = Math.floor(Math.random() * 20);
+    setThemeColor(backgroundColors[randomColor]);
+  }, [token, dispatch, selectedPlaylistId]);
+
   return (
-    <Container>
+    <Container themeColor={themeColor}>
       <div className="spotify__body">
         <Sidebar />
 

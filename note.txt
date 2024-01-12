@@ -88,3 +88,7 @@ https://developer.spotify.com/documentation/web-api/reference/skip-users-playbac
 **** axios.post(url, body , { headers: {} })
 
 2:22:54
+
+// current track => is playing 
+// click on song to play 
+// song progress bar 

@@ -53,8 +53,8 @@ const CurrentTrack = ({ spin }) => {
           </div>
 
           <div className="track__info">
-            <h4>{currentlyPlaying.name}</h4>
-            <h5>{currentlyPlaying.artists.join(", ")}</h5>
+            <h3>{currentlyPlaying.name}</h3>
+            <h4>{currentlyPlaying.artists.join(", ")}</h4>
           </div>
         </div>
       )}
@@ -78,12 +78,12 @@ const Container = styled.div`
   .track {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 1.5rem;
     user-select: none;
 
     .track__image {
       img {
-        height: 80px;
+        height: 90px;
         /* border-radius: 10px; */
         border-radius: 50%;
         animation: ${rotate} infinite 8s linear;
@@ -94,13 +94,13 @@ const Container = styled.div`
     .track__info {
       display: flex;
       flex-direction: column;
-      gap: 0.3rem;
+      gap: 0.5rem;
 
-      h4 {
+      h3 {
         color: white;
         margin: 0;
       }
-      h5 {
+      h4 {
         color: #b3b3b3;
         margin: 0;
       }

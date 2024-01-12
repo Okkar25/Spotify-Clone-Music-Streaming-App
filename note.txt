@@ -135,15 +135,9 @@ body.jsx => line 76 => playTrack function
 
 bug to be fixed 
 
-app start => change track => no problem => 
-player/pause button --- ok 
-image spinning --- ok 
+pause song => change track => error 
 
+image spinning / player state button => not correct 
 
-bug => 
-
-app start => play or pause
-
-click to change track => problem 
-player/pause button --- not ok 
-image spinning --- not ok 
+PlayerControl => line 33 => error
+setSpin(!spin)  =>  setSpin(true)  

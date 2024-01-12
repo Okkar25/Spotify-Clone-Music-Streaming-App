@@ -102,6 +102,8 @@ const Body = ({ headerBackground }) => {
       type: reducerCases.SET_PLAYER_STATE,
       payload: { playerState: true },
     });
+
+    
   };
 
   return (

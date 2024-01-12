@@ -41,7 +41,7 @@ const CurrentTrack = ({ spin }) => {
     getCurrentTrack();
   }, [token, dispatch, currentlyPlaying]); // currentlyPlaying shows the song playing at  the moment
 
-  console.log(currentlyPlaying?.isPlaying);
+  // console.log(currentlyPlaying?.isPlaying);
 
   return (
     <Container spin={spin}>

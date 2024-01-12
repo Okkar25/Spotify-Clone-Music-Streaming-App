@@ -28,8 +28,9 @@ const PlayerControls = ({ spin, setSpin }) => {
         }
       );
 
+      // if music id playing from  start
       if (response.data.is_playing) {
-        setSpin(!spin);
+        setSpin(true);
 
         await axios.put(
           `https://api.spotify.com/v1/me/player/play`,
@@ -100,29 +101,49 @@ const PlayerControls = ({ spin, setSpin }) => {
   };
 
   // control play - pause
-  const changeState = async () => {
-    const state = playerState ? "pause" : "play";
+  const changeState = async (state) => {
+    // const state = playerState ? "pause" : "play";
 
-    await axios.put(
-      `https://api.spotify.com/v1/me/player/${state}`,
-      {}, // empty body
-      {
-        headers: {
-          Authorization: "Bearer " + token,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    if (state === "play") {
+      await axios.put(
+        `https://api.spotify.com/v1/me/player/play`,
+        {}, // empty body
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-    dispatch({
-      type: reducerCases.SET_PLAYER_STATE,
-      payload: { playerState: !playerState },
-    });
+      dispatch({
+        type: reducerCases.SET_PLAYER_STATE,
+        payload: { playerState: true },
+      });
+      setSpin(true);
+    } 
+    
+    else if (state === "pause") {
+      await axios.put(
+        `https://api.spotify.com/v1/me/player/pause`,
+        {}, // empty body
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-    setSpin(!spin);
+      dispatch({
+        type: reducerCases.SET_PLAYER_STATE,
+        payload: { playerState: false },
+      });
+      setSpin(false);
+    }
   };
 
-  // console.log(playerState);
+  console.log(playerState);
 
   return (
     <Container>
@@ -136,9 +157,9 @@ const PlayerControls = ({ spin, setSpin }) => {
 
       <div className="state">
         {playerState ? (
-          <BsFillPauseCircleFill onClick={changeState} />
+          <BsFillPauseCircleFill onClick={() => changeState("pause")} />
         ) : (
-          <BsFillPlayCircleFill onClick={changeState} />
+          <BsFillPlayCircleFill onClick={() => changeState("play")} />
         )}
       </div>
 

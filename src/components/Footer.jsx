@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import CurrentTrack from "./CurrentTrack";
 import PlayerControls from "./PlayerControls";
@@ -16,13 +16,13 @@ const Container = styled.div`
   padding: 0 2rem;
 `;
 
-const Footer = () => {
-  const [spin, setSpin] = useState(false);
+const Footer = ({ setSpin, spin }) => {
+  // const [spin, setSpin] = useState(false);
 
   return (
     <Container>
       <CurrentTrack spin={spin} />
-      <PlayerControls spin={spin} setSpin={setSpin}/>
+      <PlayerControls spin={spin} setSpin={setSpin} />
       <Volume />
     </Container>
   );

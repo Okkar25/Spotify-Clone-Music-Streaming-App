@@ -43,6 +43,7 @@ const Spotify = () => {
   const bodyRef = useRef();
   const [navBackground, setNavBackground] = useState(false);
   const [headerBackground, setHeaderBackground] = useState(false);
+  const [spin, setSpin] = useState(false);
 
   const bodyScrolled = () => {
     bodyRef.current.scrollTop >= 30
@@ -63,13 +64,17 @@ const Spotify = () => {
           <Navbar navBackground={navBackground} />
 
           <div className="body__contents">
-            <Body headerBackground={headerBackground} />
+            <Body
+              headerBackground={headerBackground}
+              spin={spin}
+              setSpin={setSpin}
+            />
           </div>
         </div>
       </div>
 
       <div className="spotify__footer">
-        <Footer />
+        <Footer spin={spin} setSpin={setSpin} />
       </div>
     </Container>
   );

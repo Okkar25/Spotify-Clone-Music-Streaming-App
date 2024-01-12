@@ -6,7 +6,7 @@ import { reducerCases } from "../utils/Constants";
 import { useStateProvider } from "../utils/StateProvider";
 import { convertMsToHMS, convertMsToS } from "../utils/convertToSeconds";
 
-const Body = ({ headerBackground }) => {
+const Body = ({ headerBackground, spin, setSpin }) => {
   const [
     { token, userInfo, selectedPlaylistId, selectedPlaylist, playerState },
     dispatch,
@@ -103,7 +103,7 @@ const Body = ({ headerBackground }) => {
       payload: { playerState: true },
     });
 
-    
+    setSpin(true);
   };
 
   return (

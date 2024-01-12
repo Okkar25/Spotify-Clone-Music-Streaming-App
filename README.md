@@ -27,6 +27,7 @@ First You need a [Spotify Client ID](https://developer.spotify.com/dashboard)
 You will have to define a '.env' file and set the following variables:
 
 VITE_CLIENT_ID="YOUR_CLIENT_ID"
+
 VITE_REDIRECT_ID=http://localhost:5173/
 
 

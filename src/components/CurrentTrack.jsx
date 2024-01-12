@@ -20,10 +20,9 @@ const CurrentTrack = ({ spin }) => {
         }
       );
 
-      //   console.log(response.data);
-
       if (response.data !== "") {
         const { item } = response.data;
+
         const currentlyPlaying = {
           id: item.id,
           name: item.name,
@@ -42,7 +41,7 @@ const CurrentTrack = ({ spin }) => {
     getCurrentTrack();
   }, [token, dispatch, currentlyPlaying]); // currentlyPlaying shows the song playing at  the moment
 
-  //   console.log(currentlyPlaying);
+  console.log(currentlyPlaying?.isPlaying);
 
   return (
     <Container spin={spin}>

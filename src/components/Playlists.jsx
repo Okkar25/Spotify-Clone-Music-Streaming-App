@@ -88,8 +88,8 @@ const Playlists = () => {
     <Container>
       <ul>
         {playlists.map((props) => (
-          <div onClick={() => changeCurrentPlaylist(props.id)}>
-            <Album key={props.id} props={props} />
+          <div key={props.id} onClick={() => changeCurrentPlaylist(props.id)}>
+            <Album props={props} />
           </div>
         ))}
       </ul>

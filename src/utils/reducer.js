@@ -4,7 +4,7 @@ export const initialState = {
   token: null,
   playlists: [], // playlists in side bar
   userInfo: null,
-  selectedPlaylistId: "1Q6KsXUQQ31wSkOdn8X1Ki",
+  selectedPlaylistId: "58k8P2fT5WxU0VfCafHoOM",
   selectedPlaylist: null,
   currentlyPlaying: null,
   playerState: false,

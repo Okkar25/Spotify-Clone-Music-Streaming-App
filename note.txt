@@ -91,6 +91,7 @@ https://developer.spotify.com/documentation/web-api/reference/skip-users-playbac
 
 // current track => is playing 
 // click on song to play           ---- Done 
+// login inset client id 
 
 // song progress bar 
 // background color change 
@@ -128,3 +129,21 @@ body.jsx => line 76 => playTrack function
       payload: { playerState: true },
     });
 
+
+==================================================================================================
+
+
+bug to be fixed 
+
+app start => change track => no problem => 
+player/pause button --- ok 
+image spinning --- ok 
+
+
+bug => 
+
+app start => play or pause
+
+click to change track => problem 
+player/pause button --- not ok 
+image spinning --- not ok 

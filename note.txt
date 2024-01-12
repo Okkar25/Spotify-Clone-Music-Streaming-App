@@ -144,10 +144,10 @@ setSpin(!spin)  =>  setSpin(true)
 // click on song to play           ---- Done 
 // login insert client id          ---- Done
 // background color change         ---- Done
+// .env                            ---- Done
 
 // song progress bar               
 // shuffle / repeat 
-// .env
 
 
 --------------------------------------------------------

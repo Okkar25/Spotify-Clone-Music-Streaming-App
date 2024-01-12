@@ -45,7 +45,8 @@ const Container = styled.div`
 `;
 
 const Playlists = () => {
-  const [{ token, playlists }, dispatch] = useStateProvider();
+  const [{ token, playlists, selectedPlaylistId }, dispatch] =
+    useStateProvider();
 
   useEffect(() => {
     const getPlaylistData = async () => {
@@ -73,11 +74,23 @@ const Playlists = () => {
 
   // console.log(playlists);
 
+  // show current selected playlist songs
+  const changeCurrentPlaylist = (selectedPlaylistId) => {
+    dispatch({
+      type: reducerCases.SET_PLAYLIST_ID,
+      payload: { selectedPlaylistId: selectedPlaylistId },
+    });
+  };
+
+  // console.log(selectedPlaylistId);
+
   return (
     <Container>
       <ul>
         {playlists.map((props) => (
-          <Album key={props.id} props={props} />
+          <div onClick={() => changeCurrentPlaylist(props.id)}>
+            <Album key={props.id} props={props} />
+          </div>
         ))}
       </ul>
     </Container>

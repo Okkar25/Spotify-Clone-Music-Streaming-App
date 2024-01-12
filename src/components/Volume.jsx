@@ -113,7 +113,7 @@ const Container = styled.div`
     }
 
     input {
-      width: 15rem;
+      width: 13rem;
       border-radius: 2rem;
       height: 0.3rem;
     }

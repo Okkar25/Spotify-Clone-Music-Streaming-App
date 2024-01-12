@@ -90,5 +90,41 @@ https://developer.spotify.com/documentation/web-api/reference/skip-users-playbac
 2:22:54
 
 // current track => is playing 
-// click on song to play 
+// click on song to play           ---- Done 
+
 // song progress bar 
+// background color change 
+// shuffle / repeat 
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+
+**** click on desired song to play ****
+
+https://developer.spotify.com/documentation/web-api/reference/start-a-users-playback
+
+body.jsx => line 76 => playTrack function 
+
+    await axios.put(
+      `https://api.spotify.com/v1/me/player/play`,
+      {
+        context_uri,
+        offset: {
+          position: track_number - 1,
+        },
+        position_ms: 0,
+      },
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    dispatch({
+      type: reducerCases.SET_PLAYER_STATE,
+      payload: { playerState: true },
+    });
+

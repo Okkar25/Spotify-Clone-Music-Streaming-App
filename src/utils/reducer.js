@@ -33,6 +33,7 @@ export const reducer = (state, action) => {
       };
     }
 
+    // current playlist // update selectedPlaylistId
     case reducerCases.SET_PLAYLIST_SONGS: {
       return {
         ...state,
@@ -58,6 +59,14 @@ export const reducer = (state, action) => {
       return {
         ...state,
         playerState: action.payload.playerState,
+      };
+    }
+
+    // current playlist // update selectedPlaylistId
+    case reducerCases.SET_PLAYLIST_ID: {
+      return {
+        ...state,
+        selectedPlaylistId: action.payload.selectedPlaylistId,
       };
     }
 

@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { reducerCases } from "../utils/Constants";
 import { useStateProvider } from "../utils/StateProvider";
 
 const Container = styled.div`
@@ -50,21 +49,22 @@ const Container = styled.div`
 `;
 
 const Album = ({ props: { id, name, images, tracks, type } }) => {
-  const [{ token, playlists, selectedPlaylistId }, dispatch] =
-    useStateProvider();
+  // const [{ token, playlists, selectedPlaylistId }, dispatch] =
+  //   useStateProvider();
 
-  const handlePlaylistId = () => {
-    dispatch({
-      type: reducerCases.SET_PLAYLIST_SONGS,
-      payload: { playlistId: id },
-    });
-  };
+  // const handlePlaylistId = () => {
+  //   dispatch({
+  //     type: reducerCases.SET_PLAYLIST_SONGS,
+  //     payload: { playlistId: id },
+  //   });
+  // };
 
   // console.log(selectedPlaylistId);
 
   return (
     <Container>
-      <div className="album" onClick={handlePlaylistId}>
+      {/* <div className="album" onClick={handlePlaylistId}> */}
+      <div className="album">
         <div className="album-photo">
           <img src={images[0].url} alt="" />
         </div>

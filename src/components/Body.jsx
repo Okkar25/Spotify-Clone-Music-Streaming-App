@@ -4,10 +4,13 @@ import { AiFillClockCircle } from "react-icons/ai";
 import styled from "styled-components";
 import { reducerCases } from "../utils/Constants";
 import { useStateProvider } from "../utils/StateProvider";
+import { convertMsToHMS, convertMsToS } from "../utils/convertToSeconds";
 
 const Body = ({ headerBackground }) => {
-  const [{ token, userInfo, selectedPlaylistId, selectedPlaylist }, dispatch] =
-    useStateProvider();
+  const [
+    { token, userInfo, selectedPlaylistId, selectedPlaylist, playerState },
+    dispatch,
+  ] = useStateProvider();
 
   useEffect(() => {
     const getInitialPlaylist = async () => {
@@ -64,29 +67,51 @@ const Body = ({ headerBackground }) => {
     (pv, cv) => pv + cv.duration,
     0
   );
-  function convertMsToHrMinAndSec(milliseconds) {
-    // Calculate hours, minutes, and seconds
-    const hours = Math.floor(milliseconds / (1000 * 60 * 60));
-    const minutes = Math.floor((milliseconds % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((milliseconds % (1000 * 60)) / 1000);
 
-    // Format the result
-    // var result = hours + "h " + minutes + "m " + seconds + "s";
-    const hoursX = hours ? hours + "h " : "";
-    const minX = minutes ? minutes + "m " : "";
-    const secX = seconds ? seconds + "s " : "";
-    var result = hoursX + minX + secX;
+  const durationInOrder = convertMsToHMS(durationInMs);
 
-    return result;
-  }
-  const durationInOrder = convertMsToHrMinAndSec(durationInMs);
-  // console.log(selectedPlaylist)
+  // console.log(selectedPlaylist.tracks)
+
+  // click on selected soundtrack to play
+  const playTrack = async (
+    id,
+    name,
+    artists,
+    context_uri,
+    image,
+    track_number
+  ) => {
+    console.log(track_number);
+
+    await axios.put(
+      `https://api.spotify.com/v1/me/player/play`,
+      {
+        context_uri,
+        offset: {
+          position: track_number - 1,
+        },
+        position_ms: 0,
+      },
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    dispatch({
+      type: reducerCases.SET_PLAYER_STATE,
+      payload: { playerState: true },
+    });
+  };
 
   return (
     <Container headerBackground={headerBackground}>
       {selectedPlaylist && (
         <>
           <div className="playlist">
+            {/* highlighted playlist header */}
             <div className="playlist-highlight">
               <div className="image">
                 <img src={selectedPlaylist.image} alt="selectedPlaylist" />
@@ -105,6 +130,7 @@ const Body = ({ headerBackground }) => {
             </div>
 
             <div className="list">
+              {/* title bar  */}
               <div className="header__row">
                 <div className="col">
                   <span>#</span>
@@ -146,26 +172,23 @@ const Body = ({ headerBackground }) => {
                     index
                   ) => {
                     // fixing each song duration format
-                    function convertMsToS(milliseconds) {
-                      const hours = Math.floor(milliseconds / (1000 * 60 * 60));
-                      const minutes = Math.floor(
-                        (milliseconds % (1000 * 60 * 60)) / (1000 * 60)
-                      );
-                      const seconds = Math.floor(
-                        (milliseconds % (1000 * 60)) / 1000
-                      );
-
-                      const hoursX = hours ? hours + ":" : "";
-                      const minX = minutes ? minutes + ":" : "";
-                      const secX = seconds < 10 ? "0" + seconds : "00";
-                      var result = hoursX + minX + secX;
-                      return result;
-                    }
-
                     const durationInOrder = convertMsToS(duration);
 
                     return (
-                      <div className="row" key={index}>
+                      <div
+                        className="row"
+                        key={index}
+                        onClick={() =>
+                          playTrack(
+                            id,
+                            track_name,
+                            artists,
+                            context_uri,
+                            track_image,
+                            track_number
+                          )
+                        }
+                      >
                         <div className="col">
                           <span>{index + 1}</span>
                         </div>
@@ -308,8 +331,8 @@ const Container = styled.div`
 
               .name {
                 color: white;
-                width: 95%;
-                word-wrap: break-word;
+                /* width: 90%;
+                word-wrap: break-word; */
               }
 
               .artists {

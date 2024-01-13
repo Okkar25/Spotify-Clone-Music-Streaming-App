@@ -43,10 +43,10 @@ const CurrentTrack = ({ spin }) => {
       };
 
       getCurrentTrack();
-    }, 1000);
+    }, 500);
 
     return () => clearTimeout(timer);
-  }, [token, dispatch]); // currentlyPlaying shows the song playing at  the moment *****
+  }, [token, dispatch, currentlyPlaying]); // currentlyPlaying shows the song playing at  the moment *****
 
   // console.log(currentlyPlaying);
 

@@ -32,10 +32,10 @@ VITE_REDIRECT_ID=http://localhost:5173/
 
 
 
-![spotify1](https://github.com/francoborrelli/spotify-react-web-client/assets/118409114/9be3f17c-9c65-40b9-b15e-93f7bf96d830)
+![spotify1](https://github.com/Okkar25/Spotify-Clone-Music-Streaming-App/assets/118409114/1d0c66bc-7989-4931-aa9b-bdb7937d4fed)
 
-![spotify2](https://github.com/francoborrelli/spotify-react-web-client/assets/118409114/5ca50be3-a947-4b5c-be02-1b8e28e7d62d)
+![spotify2](https://github.com/Okkar25/Spotify-Clone-Music-Streaming-App/assets/118409114/32adaff5-2ca0-4591-8673-b8a316ccd1b3)
 
-![spotify3](https://github.com/francoborrelli/spotify-react-web-client/assets/118409114/db7e0327-7607-4cf4-8e32-8de63b50f5f0)
+![spotify3](https://github.com/Okkar25/Spotify-Clone-Music-Streaming-App/assets/118409114/e74a62ab-472c-4442-abb0-ffa13ed0c9db)
 
-![spotify4](https://github.com/francoborrelli/spotify-react-web-client/assets/118409114/dbd4cdea-1618-40d7-8700-f0b6e48a7bfa)
+![spotify5](https://github.com/Okkar25/Spotify-Clone-Music-Streaming-App/assets/118409114/ed235673-dbf5-439c-8a1e-515fb5cf80b6)

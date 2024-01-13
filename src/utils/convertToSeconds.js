@@ -25,3 +25,15 @@ export const convertMsToHMS = (milliseconds) => {
 
   return result;
 };
+
+export const calculateTime = (milliseconds) => {
+  const hours = Math.floor(milliseconds / (60 * 60));
+
+  const minutes = Math.floor(milliseconds / 60);
+  const returnedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
+
+  const seconds = Math.floor(milliseconds % 60);
+  const returnedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
+
+  return `${returnedMinutes}:${returnedSeconds}`;
+};

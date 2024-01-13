@@ -9,39 +9,46 @@ const CurrentTrack = ({ spin }) => {
     useStateProvider();
 
   useEffect(() => {
-    const getCurrentTrack = async () => {
-      const response = await axios.get(
-        "https://api.spotify.com/v1/me/player/currently-playing",
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-            "Content-Type": "application/json",
-          },
+    const timer = setTimeout(() => {
+      const getCurrentTrack = async () => {
+        const response = await axios.get(
+          "https://api.spotify.com/v1/me/player/currently-playing",
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        // console.log(response.data);
+
+        if (response.data !== "") {
+          const { item } = response.data;
+
+          const currentlyPlaying = {
+            id: item.id,
+            name: item.name,
+            artists: item.artists.map((artist) => artist.name),
+            image: item.album.images[1].url,
+            isPlaying: response.data.is_playing,
+            duration: item.duration_ms,
+          };
+
+          dispatch({
+            type: reducerCases.SET_PLAYING,
+            payload: { currentlyPlaying },
+          });
         }
-      );
+      };
 
-      if (response.data !== "") {
-        const { item } = response.data;
+      getCurrentTrack();
+    }, 1000);
 
-        const currentlyPlaying = {
-          id: item.id,
-          name: item.name,
-          artists: item.artists.map((artist) => artist.name),
-          image: item.album.images[1].url,
-          isPlaying: response.data.is_playing,
-        };
+    return () => clearTimeout(timer);
+  }, [token, dispatch]); // currentlyPlaying shows the song playing at  the moment *****
 
-        dispatch({
-          type: reducerCases.SET_PLAYING,
-          payload: { currentlyPlaying },
-        });
-      }
-    };
-
-    getCurrentTrack();
-  }, [token, dispatch, currentlyPlaying]); // currentlyPlaying shows the song playing at  the moment
-
-  // console.log(currentlyPlaying?.isPlaying);
+  // console.log(currentlyPlaying);
 
   return (
     <Container spin={spin}>

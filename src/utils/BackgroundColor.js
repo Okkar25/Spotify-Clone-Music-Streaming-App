@@ -1,5 +1,5 @@
 export const backgroundColors = [
-  "#caf0f8",
+  "#fb5607",
   "#118ab2",
   "#B65E89",
   "#DC484F",
@@ -7,8 +7,8 @@ export const backgroundColors = [
   "#E3DBCD",
   "#3257B0",
   "#284b63",
-  "#52796f",
-  "#234057",
+  "#17b978",
+  "#f4fa9c",
   "#4a4e69",
   "#00bbf9",
   "#3a0ca3",
@@ -16,7 +16,7 @@ export const backgroundColors = [
   "#7371fc",
   "#e41749",
   "#574b90",
-  "#0d3b66",
+  "#39bdc8",
   "#f090d9",
   "#1e2a78",
 ];

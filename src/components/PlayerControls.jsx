@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   BsFillPauseCircleFill,
   BsFillPlayCircleFill,
@@ -10,10 +10,15 @@ import { FiRepeat } from "react-icons/fi";
 import styled from "styled-components";
 import { reducerCases } from "../utils/Constants";
 import { useStateProvider } from "../utils/StateProvider";
+import { calculateTime, convertMsToS } from "../utils/convertToSeconds";
 
 const PlayerControls = ({ spin, setSpin }) => {
-  const [{ token, playerState, currentlyPlaying }, dispatch] =
+  const [{ token, playerState, currentlyPlaying, selectedPlaylist }, dispatch] =
     useStateProvider();
+
+  const progressBarRef = useRef();
+  const currentSongDuration = convertMsToS(currentlyPlaying?.duration);
+  const [currentTime, setCurrentTime] = useState(0);
 
   // App starts => play if spotify is playing / pause if no music playing
   useEffect(() => {
@@ -28,7 +33,7 @@ const PlayerControls = ({ spin, setSpin }) => {
         }
       );
 
-      // if music id playing from  start
+      // if music is playing from app starts
       if (response.data.is_playing) {
         setSpin(true);
 
@@ -121,9 +126,7 @@ const PlayerControls = ({ spin, setSpin }) => {
         payload: { playerState: true },
       });
       setSpin(true);
-    } 
-    
-    else if (state === "pause") {
+    } else if (state === "pause") {
       await axios.put(
         `https://api.spotify.com/v1/me/player/pause`,
         {}, // empty body
@@ -143,32 +146,65 @@ const PlayerControls = ({ spin, setSpin }) => {
     }
   };
 
-  console.log(playerState);
+  const updateProgressPosition = async () => {
+    const currentPosition = (
+      currentlyPlaying?.duration /
+      (100 / progressBarRef.current.value)
+    ).toFixed(0);
+
+    await axios.put(
+      `https://api.spotify.com/v1/me/player/seek?position_ms=${currentPosition}`,
+      {},
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  };
+
+  // console.log(currentlyPlaying)
 
   return (
     <Container>
-      <div className="shuffle">
-        <BsShuffle />
+      <div className="control-buttons">
+        <div className="shuffle">
+          <BsShuffle />
+        </div>
+
+        <div className="previous">
+          <CgPlayTrackPrev onClick={() => changeTrack("previous")} />
+        </div>
+
+        <div className="state">
+          {playerState ? (
+            <BsFillPauseCircleFill onClick={() => changeState("pause")} />
+          ) : (
+            <BsFillPlayCircleFill onClick={() => changeState("play")} />
+          )}
+        </div>
+
+        <div className="next">
+          <CgPlayTrackNext onClick={() => changeTrack("next")} />
+        </div>
+
+        <div className="repeat">
+          <FiRepeat />
+        </div>
       </div>
 
-      <div className="previous">
-        <CgPlayTrackPrev onClick={() => changeTrack("previous")} />
-      </div>
+      <div className="audio-player">
+        <span>{calculateTime(currentTime)}</span>
 
-      <div className="state">
-        {playerState ? (
-          <BsFillPauseCircleFill onClick={() => changeState("pause")} />
-        ) : (
-          <BsFillPlayCircleFill onClick={() => changeState("play")} />
-        )}
-      </div>
+        <input
+          defaultValue="30"
+          type="range"
+          ref={progressBarRef}
+          onMouseUp={updateProgressPosition}
+        />
 
-      <div className="next">
-        <CgPlayTrackNext onClick={() => changeTrack("next")} />
-      </div>
-
-      <div className="repeat">
-        <FiRepeat />
+        <span>{currentSongDuration}</span>
       </div>
     </Container>
   );
@@ -178,28 +214,68 @@ export default PlayerControls;
 
 const Container = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2rem;
+  gap: 1rem;
 
-  svg {
-    cursor: pointer;
-    color: #b3b3b3;
-    transition: 0ms.2s ease-in-out;
-    &:hover {
-      color: white;
+  .audio-player {
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+
+    span {
+      user-select: none;
+    }
+
+    input {
+      width: 20rem;
+      height: 0.2rem;
+      border-radius: 10px;
+      &::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 5px;
+        background: gray;
+        /* background: #1db954; */
+        border-radius: 5px;
+        border: none;
+      }
+
+      &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        margin-top: -6px;
+        cursor: pointer;
+        /* background-color: red; */
+      }
     }
   }
 
-  .state {
+  .control-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
     svg {
-      color: white;
+      cursor: pointer;
+      color: #b3b3b3;
+      transition: 0ms.2s ease-in-out;
+      &:hover {
+        color: white;
+      }
     }
-  }
 
-  .previous,
-  .next,
-  .state {
-    font-size: 2rem;
+    .state {
+      svg {
+        color: white;
+      }
+    }
+
+    .previous,
+    .next,
+    .state {
+      font-size: 2rem;
+    }
   }
 `;

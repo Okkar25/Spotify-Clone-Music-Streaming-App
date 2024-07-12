@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { useStateProvider } from "../utils/StateProvider";
 
 const Container = styled.div`
   max-height: 10vh;
@@ -60,13 +59,18 @@ const Album = ({ props: { id, name, images, tracks, type } }) => {
   // };
 
   // console.log(selectedPlaylistId);
+  // console.log(images[0].url);
+
+  // Check if images exist and if the first image is available
+  const imageUrl = images && images.length > 0 ? images[0].url : null;
 
   return (
     <Container>
       {/* <div className="album" onClick={handlePlaylistId}> */}
       <div className="album">
         <div className="album-photo">
-          <img src={images[0].url} alt="" />
+          {/* Conditionally render the img tag */}
+          {imageUrl && <img src={imageUrl} alt="" />}
         </div>
 
         <div className="album-details">

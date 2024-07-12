@@ -53,6 +53,7 @@ window.location.href  =>  returns the href (URL) of the current page
 
 https://accounts.spotify.com/en/authorize?client_id=cf6a647a18b6477e89f69356e5add9db&redirect_uri=http://localhost:5173/&scope=user-read-email%20user-read-private%20user-read-playback-state%20user-modify-playback-state%20user-read-currently-playing%20user-read-playback-position%20user-top-read%20user-read-recently-played&response_type=token&show_dialog=true
 
+https://accounts.spotify.com/en/authorize?client_id=a1f4c7b5514c4be387091b56a219c70&redirect_uri=http://localhost:5173/&scope=user-read-email%20user-read-private%20user-read-playback-state%20user-modify-playback-state%20user-read-currently-playing%20user-read-playback-position%20user-top-read%20user-read-recently-played&response_type=token&show_dialog=true
 
 
 apiUrl  /  client_id  /  redirect_uri  /  scope ( scope.join(" ") => %20 )  /  response_type=token  /  show_dialog=true 
@@ -162,3 +163,51 @@ to access them => must start with import.meta.
 import.meta.env.VITE_CLIENT_ID
 import.meta.env.VITE_REDIRECT_URL 
 
+
+
+-------------------------------------------------------------------------------------------
+
+
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const getCurrentTrack = async () => {
+        const response = await axios.get(
+          "https://api.spotify.com/v1/me/player/currently-playing",
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        // console.log(response.data);
+
+        if (response.data !== "") {
+          const { item } = response.data;
+
+          const currentlyPlaying = {
+            id: item.id,
+            name: item.name,
+            artists: item.artists.map((artist) => artist.name),
+            image: item.album.images[1].url,
+            isPlaying: response.data.is_playing,
+            duration: item.duration_ms,
+          };
+
+          dispatch({
+            type: reducerCases.SET_PLAYING,
+            payload: { currentlyPlaying },
+          });
+        }
+      };
+
+      getCurrentTrack();
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [token, dispatch, currentlyPlaying?.id]);
+
+
+  error fixed =>  currentlyPlaying  =>  currentlyPlaying?.id
